@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'asciidoctor_fb2'
+require 'asciidoctor/cli'
+
+options = Asciidoctor::Cli::Options.new backend: 'fb2'
+
+# FIXME: provide an API in Asciidoctor for sub-components to print version information
+unless ARGV != ['-v'] && (ARGV & ['-V', '--version']).empty?
+  require_relative '../lib/asciidoctor_fb2/version'
+  $stdout.write %(Asciidoctor FB2 #{Asciidoctor::FB2::VERSION} using )
+  options.print_version
+  exit 0
+end
+
+# FIXME: This is a really bizarre API. Please make me simpler.
+case (result = options.parse! ARGV)
+when Integer
+  exit result
+else
+  invoker = Asciidoctor::Cli::Invoker.new options
+  GC.start
+  invoker.invoke!
+  exit invoker.code
+end
