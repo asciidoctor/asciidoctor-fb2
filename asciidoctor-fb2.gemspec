@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_runtime_dependency 'asciidoctor', '~> 2.0'
+  s.add_runtime_dependency 'fb2rb', '~> 0.1.0'
 
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.9.0'
