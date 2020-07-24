@@ -18,7 +18,7 @@ RSpec.configure do |config| # rubocop:disable Metrics/BlockLength
   end
 
   def asciidoctor_fb2_bin
-    %w[bundle exec asciidoctor-fb2]
+    bin_script 'asciidoctor-fb2'
   end
 
   def run_command(cmd, *args)
