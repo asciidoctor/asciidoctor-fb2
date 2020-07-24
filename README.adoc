@@ -14,17 +14,37 @@ image:{uri-project}/workflows/CI/badge.svg?branch=master[Build Status,link={uri-
 
 == Installation
 
+{project-name} is published on RubyGems.org.
+You can install the published gem using the following command:
+
 [source,shell script]
 ----
 $ gem install asciidoctor-fb2
 ----
 
-== Usage
+Assuming all the required gems install properly, verify you can run the `{project-handle}` script:
 
 [source,shell script]
 ----
-asciidoctor-fb2 /path/to/book.adoc
+$ asciidoctor-fb2 -v
 ----
+
+If you see the version of {project-name} printed, you're ready to use {project-name}.
+
+== Usage
+
+Converting an AsciiDoc document to FB2 is as simple as passing your document to the `{project-handle}` command.
+This command should be available on your PATH if you installed the `{project-handle}` gem.
+Otherwise, you can find the command in the [path]_bin_ folder of the project.
+We also recommend specifying an output directory using the `-D` option flag.
+
+[source,shell script]
+----
+$ asciidoctor-fb2 -D output path/to/book.adoc
+----
+
+When the script completes, you'll see the file [file]_book.fb2.zip_ appear in the [path]_output_ directory.
+Open that file with an FB2 reader to view the result.
 
 == Development
 
