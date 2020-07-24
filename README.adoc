@@ -10,7 +10,7 @@ Marat Radchenko <marat@slonopotamus.org>
 image:https://img.shields.io/gem/v/{project-handle}.svg[Latest Release,link={uri-gem}]
 image:{uri-project}/workflows/CI/badge.svg?branch=master[Build Status,link={uri-ci}]
 
-{project-handle} is an Asciidoctor extension for converting AsciiDoc documents directly to the FB2 e-book format.
+{project-name} is an Asciidoctor extension for converting AsciiDoc documents directly to the FB2 e-book format.
 
 == Installation
 
