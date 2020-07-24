@@ -46,11 +46,6 @@ $ asciidoctor-fb2 -D output path/to/book.adoc
 When the script completes, you'll see the file [file]_book.fb2.zip_ appear in the [path]_output_ directory.
 Open that file with an FB2 reader to view the result.
 
-== Development
-
-After checking out the repo, run `bundle install` to install dependencies.
-Then, run `bundle exec rake spec` to run the tests.
-
 === FB2-related AsciiDoc Attributes
 
 The metadata in the generated FB2 file is populated from attributes in the AsciiDoc document.
@@ -75,3 +70,8 @@ The keywords should be represented as comma-separated values (CSV).
 |Populates genres list in FB2 metadata
 The genres should be represented as comma-separated values (CSV).
 |===
+
+== Development
+
+After checking out the repo, run `bundle install` to install dependencies.
+Then, run `bundle exec rake spec` to run the tests.
