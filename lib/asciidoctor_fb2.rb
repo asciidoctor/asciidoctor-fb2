@@ -34,6 +34,7 @@ module Asciidoctor
             author.email.nil? ? [] : [author.email]
           )
         end
+        @book.description.title_info.lang = node.attr('lang', 'en')
         body = %(<section>
 <title><p>#{node.doctitle}</p></title>
 #{node.content}
