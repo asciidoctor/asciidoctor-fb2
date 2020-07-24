@@ -42,7 +42,10 @@ module Asciidoctor
         if node.document.footnotes
           notes = []
           node.document.footnotes.each do |footnote|
-            notes << %(<section id="note-#{footnote.index}"><p>#{footnote.text}</p></section>)
+            notes << %(<section id="note-#{footnote.index}">
+<title><p>#{footnote.index}</p></title>
+<p>#{footnote.text}</p>
+</section>)
           end
           @book.bodies << FB2rb::Body.new('notes', notes * "\n")
         end
@@ -131,7 +134,7 @@ module Asciidoctor
       # @param node [Asciidoctor::Inline]
       def convert_inline_footnote(node)
         index = node.attr('index')
-        %(<sup>[<a l:href="#note-#{index}">#{index}</a>]</sup>)
+        %(<a l:href="#note-#{index}" type="note">[#{index}]</a>)
       end
 
       # @param node [Asciidoctor::Inline]
@@ -140,6 +143,7 @@ module Asciidoctor
         %(<image #{image_attrs * ' '}/>)
       end
 
+      # @param node [Asciidoctor::Block]
       def convert_image(node)
         image_attrs = resolve_image_attrs(node, node.attr('target'))
         image_attrs << %(title="#{node.captioned_title}") if node.title?
