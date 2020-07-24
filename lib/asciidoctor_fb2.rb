@@ -25,16 +25,19 @@ module Asciidoctor
       # @param node [Asciidoctor::Document]
       def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
         @book = FB2rb::Book.new
-        @book.description.title_info.book_title = node.doctitle
-        @book.description.title_info.lang = node.attr('lang', 'en')
+        document_info = @book.description.document_info
+        title_info = @book.description.title_info
+
+        title_info.book_title = node.doctitle
+        title_info.lang = node.attr('lang', 'en')
         (node.attr 'keywords', '').split(CSV_DELIMITER_REGEX).each do |s|
-          @book.description.title_info.keywords << s
+          title_info.keywords << s
         end
         (node.attr 'genres', '').split(CSV_DELIMITER_REGEX).each do |s|
-          @book.description.title_info.genres << s
+          title_info.genres << s
         end
         node.authors.each do |author|
-          @book.description.title_info.authors << FB2rb::Author.new(
+          title_info.authors << FB2rb::Author.new(
             author.firstname,
             author.middlename,
             author.lastname,
@@ -47,18 +50,19 @@ module Asciidoctor
         if node.attr? 'series-name'
           series_name = node.attr 'series-name'
           series_volume = node.attr 'series-volume', 1
-          @book.description.title_info.sequences << FB2rb::Sequence.new(series_name, series_volume)
+          title_info.sequences << FB2rb::Sequence.new(series_name, series_volume)
         end
 
         date = node.attr('revdate') || node.attr('docdate')
-        @book.description.title_info.date = @book.description.document_info.date = FB2rb::FB2Date.new(date, Date.parse(date))
+        fb2date = FB2rb::FB2Date.new(date, Date.parse(date))
+        title_info.date = document_info.date = fb2date
 
-        @book.description.document_info.id = node.attr('uuid', '')
-        @book.description.document_info.version = node.attr('revnumber')
-        @book.description.document_info.program_used = %(Asciidoctor FB2 #{VERSION} using Asciidoctor #{node.attr('asciidoctor-version')})
+        document_info.id = node.attr('uuid', '')
+        document_info.version = node.attr('revnumber')
+        document_info.program_used = %(Asciidoctor FB2 #{VERSION} using Asciidoctor #{node.attr('asciidoctor-version')})
 
         publisher = node.attr('publisher')
-        @book.description.document_info.publishers << publisher if publisher
+        document_info.publishers << publisher if publisher
 
         body = %(<section>
 <title><p>#{node.doctitle}</p></title>
@@ -266,31 +270,35 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Table]
-      def convert_table(node)
+      def convert_table(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         lines = ['<table>']
-        node.rows.to_h.each do |tsec, rows|
+        node.rows.to_h.each do |tsec, rows| # rubocop:disable Metrics/BlockLength
           next if rows.empty?
+
           rows.each do |row|
             lines << '<tr>'
             row.each do |cell|
-              if tsec == :head
-                cell_content = cell.text
-              else
-                case cell.style
-                when :asciidoc
-                  cell_content = cell.content
-                when :literal
-                  cell_content = %(<p><pre>#{cell.text}</pre></p>)
-                else
-                  cell_content = (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content.join '</p>
-<p>'}</p>)
-                end
-              end
+              cell_content = if tsec == :head
+                               cell.text
+                             else
+                               case cell.style
+                               when :asciidoc
+                                 cell.content
+                               when :literal
+                                 %(<p><pre>#{cell.text}</pre></p>)
+                               else
+                                 (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content.join "</p>\n<p>"}</p>)
+                               end
+                             end
 
               cell_tag_name = (tsec == :head || cell.style == :header ? 'th' : 'td')
-              cell_colspan_attribute = cell.colspan ? %( colspan="#{cell.colspan}") : ''
-              cell_rowspan_attribute = cell.rowspan ? %( rowspan="#{cell.rowspan}") : ''
-              lines << %(<#{cell_tag_name}#{cell_colspan_attribute}#{cell_rowspan_attribute} halign="#{cell.attr 'halign'}" valign="#{cell.attr 'valign'}">#{cell_content}</#{cell_tag_name}>)
+              cell_attrs = [
+                %(halign="#{cell.attr 'halign'}"),
+                %(valign="#{cell.attr 'valign'}")
+              ]
+              cell_attrs << %(colspan="#{cell.colspan}") if cell.colspan
+              cell_attrs << %(rowspan="#{cell.rowspan}") if cell.rowspan
+              lines << %(<#{cell_tag_name} #{cell_attrs * ' '}">#{cell_content}</#{cell_tag_name}>)
             end
             lines << '</tr>'
           end
