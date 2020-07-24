@@ -35,6 +35,8 @@ module Asciidoctor
           )
         end
         @book.description.title_info.lang = node.attr('lang', 'en')
+        date = node.attr('revdate') || node.attr('docdate')
+        @book.description.document_info.date.value = Date.parse(date)
         body = %(<section>
 <title><p>#{node.doctitle}</p></title>
 #{node.content}

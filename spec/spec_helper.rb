@@ -37,4 +37,26 @@ RSpec.configure do |config| # rubocop:disable Metrics/BlockLength
   def temp_file(*path)
     temp_dir.join(*path)
   end
+
+  def fixtures_dir
+    Pathname.new(__dir__).join 'fixtures'
+  end
+
+  def fixture_file(*path)
+    fixtures_dir.join(*path)
+  end
+
+  def convert(input, opts = {})
+    opts[:backend] = 'fb2'
+    opts[:header_footer] = true
+    opts[:mkdirs] = true
+    opts[:safe] = Asciidoctor::SafeMode::UNSAFE unless opts.key? :safe
+    return Asciidoctor.convert(input, opts) unless input.is_a?(Pathname)
+
+    opts[:to_dir] = temp_dir.to_s unless opts.key?(:to_dir) || opts.key?(:to_file)
+    result = Asciidoctor.convert_file(input.to_s, opts)
+    output = Pathname.new(result.attr('outfile'))
+    book = FB2rb::Book.read(output)
+    [book, output]
+  end
 end
