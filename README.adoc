@@ -16,7 +16,7 @@ image:{uri-project}/workflows/CI/badge.svg?branch=master[Build Status,link={uri-
 
 [source,shell script]
 ----
-$ gem install asciidoctor-fb2 --pre
+$ gem install asciidoctor-fb2
 ----
 
 == Usage
