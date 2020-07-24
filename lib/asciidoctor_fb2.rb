@@ -20,6 +20,7 @@ module Asciidoctor
         outfilesuffix '.fb2.zip'
       end
 
+      # @param node [Asciidoctor::Document]
       def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         @book = FB2rb::Book.new
         @book.description.title_info.book_title = node.doctitle
@@ -48,11 +49,13 @@ module Asciidoctor
         @book
       end
 
+      # @param node [Asciidoctor::Section]
       def convert_preamble(node)
         mark_last_paragraph(node)
         node.content
       end
 
+      # @param node [Asciidoctor::Section]
       def convert_section(node)
         mark_last_paragraph(node)
         if node.parent == node.document && node.document.doctype == 'book'
@@ -66,6 +69,7 @@ module Asciidoctor
         end
       end
 
+      # @param node [Asciidoctor::Block]
       def convert_paragraph(node)
         lines = [
           '<p>',
@@ -76,6 +80,7 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param node [Asciidoctor::Block]
       def convert_listing(node)
         lines = []
         node.content.split("\n").each do |line|
@@ -97,11 +102,13 @@ module Asciidoctor
         latexmath: ['<code>', '</code>']
       }).default = ['', '']
 
+      # @param node [Asciidoctor::Inline]
       def convert_inline_quoted(node)
         open, close = QUOTE_TAGS[node.type]
         %(#{open}#{node.text}#{close})
       end
 
+      # @param node [Asciidoctor::Inline]
       def convert_inline_anchor(node) # rubocop:disable Metrics/MethodLength
         case node.type
         when :xref
@@ -121,11 +128,13 @@ module Asciidoctor
         end
       end
 
+      # @param node [Asciidoctor::Inline]
       def convert_inline_footnote(node)
         index = node.attr('index')
         %(<sup>[<a l:href="#note-#{index}">#{index}</a>]</sup>)
       end
 
+      # @param node [Asciidoctor::Inline]
       def convert_inline_image(node)
         image_attrs = resolve_image_attrs(node)
         %(<image #{image_attrs * ' '}/>)
@@ -138,11 +147,14 @@ module Asciidoctor
         %(<p><image #{image_attrs * ' '}/></p>)
       end
 
+      # @param doc [Asciidoctor::Document]
+      # @return [Asciidoctor::Document]
       def root_document(doc)
         doc = doc.parent_document until doc.parent_document.nil?
         doc
       end
 
+      # @param node [Asciidoctor::AbstractNode]
       def resolve_image_attrs(node) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         target = node.image_uri(node.attr('target'))
         unless Asciidoctor::Helpers.uriish?(target)
@@ -163,12 +175,14 @@ module Asciidoctor
         image_attrs << %(alt="#{node.attr('alt')}") if node.attr? 'alt'
       end
 
+      # @param node [Asciidoctor::Block]
       def convert_admonition(node)
         %(<p><strong>#{node.title || node.caption}:</strong>
 #{node.content}
 </p>)
       end
 
+      # @param node [Asciidoctor::List]
       def convert_ulist(node)
         lines = []
         node.items.each do |item|
@@ -179,6 +193,7 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param node [Asciidoctor::List]
       def convert_olist(node)
         lines = []
         node.items.each_with_index do |item, index|
@@ -189,6 +204,7 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param node [Asciidoctor::List]
       def convert_dlist(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         lines = ['<table>']
         node.items.each do |terms, dd|
@@ -218,6 +234,7 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param root [Asciidoctor::AbstractNode]
       def mark_last_paragraph(root)
         return unless (last_block = root.blocks[-1])
 
@@ -226,6 +243,7 @@ module Asciidoctor
         nil
       end
 
+      # @param output [FB2rb::Book]
       def write(output, target)
         output.write(target)
       end
