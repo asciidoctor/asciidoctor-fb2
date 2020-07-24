@@ -10,6 +10,8 @@ module Asciidoctor
     class Converter < Asciidoctor::Converter::Base # rubocop:disable Metrics/ClassLength
       include ::Asciidoctor::Writer
 
+      CSV_DELIMITER_REGEX = /\s*,\s*/.freeze
+
       register_for 'fb2'
 
       # @return [FB2rb::Book]
@@ -21,9 +23,16 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Document]
-      def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
         @book = FB2rb::Book.new
         @book.description.title_info.book_title = node.doctitle
+        @book.description.title_info.lang = node.attr('lang', 'en')
+        (node.attr 'keywords', '').split(CSV_DELIMITER_REGEX).each do |s|
+          @book.description.title_info.keywords << s
+        end
+        (node.attr 'genres', '').split(CSV_DELIMITER_REGEX).each do |s|
+          @book.description.title_info.genres << s
+        end
         node.authors.each do |author|
           @book.description.title_info.authors << FB2rb::Author.new(
             author.firstname,
@@ -34,9 +43,24 @@ module Asciidoctor
             author.email.nil? ? [] : [author.email]
           )
         end
-        @book.description.title_info.lang = node.attr('lang', 'en')
+
+        if node.attr? 'series-name'
+          series_name = node.attr 'series-name'
+          series_volume = node.attr 'series-volume', 1
+          @book.description.title_info.sequences << FB2rb::Sequence.new(series_name, series_volume)
+        end
+
         date = node.attr('revdate') || node.attr('docdate')
+        @book.description.title_info.date = date
         @book.description.document_info.date.value = Date.parse(date)
+
+        @book.description.document_info.id = node.attr('uuid', '')
+        @book.description.document_info.version = node.attr('revnumber')
+        @book.description.document_info.program_used = %(Asciidoctor FB2 #{VERSION} using Asciidoctor #{node.attr('asciidoctor-version')})
+
+        publisher = node.attr('publisher')
+        @book.description.document_info.publishers << publisher if publisher
+
         body = %(<section>
 <title><p>#{node.doctitle}</p></title>
 #{node.content}

@@ -30,3 +30,28 @@ asciidoctor-fb2 /path/to/book.adoc
 
 After checking out the repo, run `bundle install` to install dependencies.
 Then, run `bundle exec rake spec` to run the tests.
+
+=== FB2-related AsciiDoc Attributes
+
+The metadata in the generated FB2 file is populated from attributes in the AsciiDoc document.
+The names of the attributes and the metadata elements to which they map are documented in this section.
+
+.AsciiDoc attributes that control the FB2 metadata
+[cols="1m,3"]
+|===
+|Name |Description
+
+|uuid
+|Populates unique book identifier in FB2 metadata.
+
+|lang
+|Populates the content language in FB2 metadata.
+
+|keywords
+|Populates keywords list in FB2 metadata
+The keywords should be represented as comma-separated values (CSV).
+
+|genres
+|Populates genres list in FB2 metadata
+The genres should be represented as comma-separated values (CSV).
+|===
