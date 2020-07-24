@@ -51,8 +51,7 @@ module Asciidoctor
         end
 
         date = node.attr('revdate') || node.attr('docdate')
-        @book.description.title_info.date = date
-        @book.description.document_info.date.value = Date.parse(date)
+        @book.description.title_info.date = @book.description.document_info.date = FB2rb::FB2Date.new(date, Date.parse(date))
 
         @book.description.document_info.id = node.attr('uuid', '')
         @book.description.document_info.version = node.attr('revnumber')
@@ -260,6 +259,41 @@ module Asciidoctor
           end
           lines << '</td>'
           lines << '</tr>'
+        end
+        lines << '</table>'
+        lines << '<empty-line/>' unless node.has_role?('last')
+        lines * "\n"
+      end
+
+      # @param node [Asciidoctor::Table]
+      def convert_table(node)
+        lines = ['<table>']
+        node.rows.to_h.each do |tsec, rows|
+          next if rows.empty?
+          rows.each do |row|
+            lines << '<tr>'
+            row.each do |cell|
+              if tsec == :head
+                cell_content = cell.text
+              else
+                case cell.style
+                when :asciidoc
+                  cell_content = cell.content
+                when :literal
+                  cell_content = %(<p><pre>#{cell.text}</pre></p>)
+                else
+                  cell_content = (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content.join '</p>
+<p>'}</p>)
+                end
+              end
+
+              cell_tag_name = (tsec == :head || cell.style == :header ? 'th' : 'td')
+              cell_colspan_attribute = cell.colspan ? %( colspan="#{cell.colspan}") : ''
+              cell_rowspan_attribute = cell.rowspan ? %( rowspan="#{cell.rowspan}") : ''
+              lines << %(<#{cell_tag_name}#{cell_colspan_attribute}#{cell_rowspan_attribute} halign="#{cell.attr 'halign'}" valign="#{cell.attr 'valign'}">#{cell_content}</#{cell_tag_name}>)
+            end
+            lines << '</tr>'
+          end
         end
         lines << '</table>'
         lines << '<empty-line/>' unless node.has_role?('last')
