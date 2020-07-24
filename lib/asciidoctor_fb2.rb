@@ -136,12 +136,12 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Inline]
       def convert_inline_image(node)
-        image_attrs = resolve_image_attrs(node)
+        image_attrs = resolve_image_attrs(node, node.target)
         %(<image #{image_attrs * ' '}/>)
       end
 
       def convert_image(node)
-        image_attrs = resolve_image_attrs(node)
+        image_attrs = resolve_image_attrs(node, node.attr('target'))
         image_attrs << %(title="#{node.captioned_title}") if node.title?
         image_attrs << %(id="#{node.id}") if node.id
         %(<p><image #{image_attrs * ' '}/></p>)
@@ -155,8 +155,9 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::AbstractNode]
-      def resolve_image_attrs(node) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        target = node.image_uri(node.attr('target'))
+      # @param target [String]
+      def resolve_image_attrs(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        target = node.image_uri(target)
         unless Asciidoctor::Helpers.uriish?(target)
           out_dir = node.attr('outdir', nil, true) || doc_option(node.document, :to_dir)
           fs_path = File.join(out_dir, target)
