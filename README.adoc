@@ -63,11 +63,11 @@ The names of the attributes and the metadata elements to which they map are docu
 |Populates the content language in FB2 metadata.
 
 |keywords
-|Populates keywords list in FB2 metadata
+|Populates keywords list in FB2 metadata.
 The keywords should be represented as comma-separated values (CSV).
 
 |genres
-|Populates genres list in FB2 metadata
+|Populates genres list in FB2 metadata.
 The genres should be represented as comma-separated values (CSV).
 |===
 
