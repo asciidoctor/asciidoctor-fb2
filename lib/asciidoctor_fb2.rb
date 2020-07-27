@@ -24,6 +24,7 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Document]
       def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+        @extract = node.attr? 'ebook-extract'
         @book = FB2rb::Book.new
         document_info = @book.description.document_info
         title_info = @book.description.title_info
@@ -324,7 +325,7 @@ module Asciidoctor
 
       # @param output [FB2rb::Book]
       def write(output, target)
-        output.write(target)
+        output.write_compressed(target)
       end
     end
   end

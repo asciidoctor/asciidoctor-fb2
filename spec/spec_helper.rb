@@ -56,7 +56,7 @@ RSpec.configure do |config| # rubocop:disable Metrics/BlockLength
     opts[:to_dir] = temp_dir.to_s unless opts.key?(:to_dir) || opts.key?(:to_file)
     result = Asciidoctor.convert_file(input.to_s, opts)
     output = Pathname.new(result.attr('outfile'))
-    book = FB2rb::Book.read(output)
+    book = FB2rb::Book.read_compressed(output)
     [book, output]
   end
 end
