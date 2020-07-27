@@ -7,6 +7,10 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* add support for cover image via `+:front-cover-image:+` attribute. https://github.com/slonopotamus/asciidoctor-fb2/issues/3[#3]
+
 == 0.1.0 (2020-07-24) - @slonopotamus
 
-* Initial release
+* initial release

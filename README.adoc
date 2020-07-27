@@ -69,6 +69,9 @@ The keywords should be represented as comma-separated values (CSV).
 |genres
 |Populates genres list in FB2 metadata.
 The genres should be represented as comma-separated values (CSV).
+
+|front-cover-image
+|Specifies path to front cover image.
 |===
 
 == Development

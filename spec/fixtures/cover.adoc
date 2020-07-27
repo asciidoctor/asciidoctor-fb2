@@ -1,0 +1,2 @@
+= Book with cover
+:front-cover-image: wolpertinger.jpg

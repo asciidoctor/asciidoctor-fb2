@@ -57,6 +57,12 @@ module Asciidoctor
         fb2date = FB2rb::FB2Date.new(date, Date.parse(date))
         title_info.date = document_info.date = fb2date
 
+        unless (cover_image = node.attr('front-cover-image')).nil?
+          cover_image_path = node.image_uri(cover_image)
+          register_binary(node, cover_image_path)
+          title_info.coverpage = FB2rb::Coverpage.new([%(##{cover_image_path})])
+        end
+
         document_info.id = node.attr('uuid', '')
         document_info.version = node.attr('revnumber')
         document_info.program_used = %(Asciidoctor FB2 #{VERSION} using Asciidoctor #{node.attr('asciidoctor-version')})
@@ -169,13 +175,13 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Inline]
       def convert_inline_image(node)
-        image_attrs = resolve_image_attrs(node, node.target)
+        image_attrs = register_binary(node, node.image_uri(node.target))
         %(<image #{image_attrs * ' '}/>)
       end
 
       # @param node [Asciidoctor::Block]
       def convert_image(node)
-        image_attrs = resolve_image_attrs(node, node.attr('target'))
+        image_attrs = register_binary(node, node.image_uri(node.attr('target')))
         image_attrs << %(title="#{node.captioned_title}") if node.title?
         image_attrs << %(id="#{node.id}") if node.id
         %(<p><image #{image_attrs * ' '}/></p>)
@@ -190,8 +196,7 @@ module Asciidoctor
 
       # @param node [Asciidoctor::AbstractNode]
       # @param target [String]
-      def resolve_image_attrs(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        target = node.image_uri(target)
+      def register_binary(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         unless Asciidoctor::Helpers.uriish?(target)
           out_dir = node.attr('outdir', nil, true) || doc_option(node.document, :to_dir)
           fs_path = File.join(out_dir, target)
