@@ -23,7 +23,7 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Document]
-      def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
+      def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         @extract = node.attr? 'ebook-extract'
         @book = FB2rb::Book.new
         document_info = @book.description.document_info
@@ -197,7 +197,7 @@ module Asciidoctor
 
       # @param node [Asciidoctor::AbstractNode]
       # @param target [String]
-      def register_binary(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def register_binary(node, target) # rubocop:disable Metrics/MethodLength
         unless Asciidoctor::Helpers.uriish?(target)
           out_dir = node.attr('outdir', nil, true) || doc_option(node.document, :to_dir)
           fs_path = File.join(out_dir, target)

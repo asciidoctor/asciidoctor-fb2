@@ -46,7 +46,7 @@ RSpec.configure do |config| # rubocop:disable Metrics/BlockLength
     fixtures_dir.join(*path)
   end
 
-  def convert(input, opts = {})
+  def convert(input, opts = {}) # rubocop:disable Metrics/AbcSize
     opts[:backend] = 'fb2'
     opts[:header_footer] = true
     opts[:mkdirs] = true
