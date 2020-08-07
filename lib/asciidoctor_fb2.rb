@@ -218,9 +218,11 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Block]
       def convert_admonition(node)
-        %(<p><strong>#{node.title || node.caption}:</strong>
+        lines = [%(<p><strong>#{node.title || node.caption}:</strong>
 #{node.content}
-</p>)
+</p>)]
+        lines << '<empty-line/>' unless node.has_role?('last')
+        lines * "\n"
       end
 
       # @param node [Asciidoctor::List]
