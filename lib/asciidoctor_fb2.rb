@@ -226,22 +226,30 @@ module Asciidoctor
       # @param node [Asciidoctor::List]
       def convert_ulist(node)
         lines = []
+        @stack ||= []
+
         node.items.each do |item|
-          lines << %(<p>• #{item.text}</p>)
+          @stack << '•'
+          lines << %(<p>#{@stack * ' '} #{item.text}</p>)
           lines << %(<p>#{item.content}</p>) if item.blocks?
+          @stack.pop
         end
-        lines << '<empty-line/>' unless node.has_role?('last')
+
+        lines << '<empty-line/>' unless node.has_role?('last') || !@stack.empty?
         lines * "\n"
       end
 
       # @param node [Asciidoctor::List]
-      def convert_olist(node)
+      def convert_olist(node) # rubocop:disable Metrics/AbcSize
         lines = []
+        @stack ||= []
         node.items.each_with_index do |item, index|
-          lines << %(<p>#{index + 1}. #{item.text}</p>)
+          @stack << %(#{index + 1}.)
+          lines << %(<p>#{@stack * ' '} #{item.text}</p>)
           lines << %(<p>#{item.content}</p>) if item.blocks?
+          @stack.pop
         end
-        lines << '<empty-line/>' unless node.has_role?('last')
+        lines << '<empty-line/>' unless node.has_role?('last') || !@stack.empty?
         lines * "\n"
       end
 
