@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'asciidoctor-diagram', '~> 2.0'
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.9.0'
-  s.add_development_dependency 'rubocop', '~> 0.92.0'
+  s.add_development_dependency 'rubocop', '~> 0.93.0'
   s.add_development_dependency 'rubocop-rspec', '~> 1.43.1'
 end
