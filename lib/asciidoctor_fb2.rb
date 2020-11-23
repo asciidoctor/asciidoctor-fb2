@@ -148,6 +148,20 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Inline]
+      def convert_inline_menu(node)
+        caret = '&#160;<strong>&#8250;</strong> '
+        menu = node.attr('menu')
+        menuitem = node.attr('menuitem')
+        submenus = node.attr('submenus').join(%(</b>#{caret}<b>))
+
+        result = %(<strong>#{menu}</strong>)
+        result += %(#{caret}<strong>#{submenus}</strong>) unless submenus.empty?
+        result += %(#{caret}<strong>#{menuitem}</strong>) unless menuitem.empty?
+
+        result
+      end
+
+      # @param node [Asciidoctor::Inline]
       def convert_inline_anchor(node) # rubocop:disable Metrics/MethodLength
         case node.type
         when :xref

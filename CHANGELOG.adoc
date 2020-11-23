@@ -13,6 +13,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 * update fb2rb to 0.3.0
 * add support for nested lists. https://github.com/slonopotamus/asciidoctor-fb2/issues/2[#2]
 * output uncompressed book if filename doesn't end with `.zip`
+* add support for `menu` inline macro. https://github.com/slonopotamus/asciidoctor-fb2/issues/12[#12]
 
 == 0.1.0 (2020-07-24) - @slonopotamus
 

@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 
-describe 'asciidoctor-fb2' do
+describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
   it 'produces stable output for reproducible books' do
     out_file1 = temp_file 'book1.fb2.zip'
     out_file2 = temp_file 'book2.fb2.zip'
@@ -22,5 +22,18 @@ describe 'asciidoctor-fb2' do
     expect(binary).not_to be_nil
     expect(binary.id).to eq('wolpertinger.jpg')
     expect(binary.content).to eq(IO.read(fixture_file('wolpertinger.jpg'), mode: 'rb'))
+  end
+
+  it 'converts inline menu' do
+    book, = convert <<~BOOK
+      = Title
+      :experimental:
+
+      To save the file, select menu:File[Save].
+    BOOK
+
+    body = book.bodies[0]
+    expect(body).not_to be_nil
+    expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
   end
 end
