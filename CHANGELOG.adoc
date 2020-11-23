@@ -7,7 +7,7 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
-== Unreleased
+== 0.2.0 (2020-11-23) - @slonopotamus
 
 * add support for cover image via `+:front-cover-image:+` attribute. https://github.com/slonopotamus/asciidoctor-fb2/issues/3[#3]
 * update fb2rb to 0.3.0
