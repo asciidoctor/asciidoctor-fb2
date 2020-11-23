@@ -46,7 +46,7 @@ $ asciidoctor-fb2 -D output path/to/book.adoc
 When the script completes, you'll see the file [file]_book.fb2.zip_ appear in the [path]_output_ directory.
 Open that file with an FB2 reader to view the result.
 
-=== FB2-related AsciiDoc Attributes
+== FB2-related AsciiDoc Attributes
 
 The metadata in the generated FB2 file is populated from attributes in the AsciiDoc document.
 The names of the attributes and the metadata elements to which they map are documented in this section.
