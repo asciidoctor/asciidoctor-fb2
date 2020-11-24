@@ -361,7 +361,9 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Table]
       def convert_table(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-        lines = ['<table>']
+        lines = []
+        lines << %(<subtitle>#{node.captioned_title}</subtitle>) if node.title?
+        lines << '<table>'
         node.rows.to_h.each do |tsec, rows| # rubocop:disable Metrics/BlockLength
           next if rows.empty?
 
