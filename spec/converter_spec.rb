@@ -38,6 +38,21 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>Help</strong>')
   end
 
+  it 'converts sidebar' do
+    book, = convert <<~BOOK
+      = Title
+      
+      .Bzzzz
+      ****
+      Sidebar
+      ****
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<p><strong>Bzzzz</strong>')
+    expect(body.content).to include("<p>\nSidebar\n</p>")
+  end
+
   it 'converts quote' do
     book, = convert <<~BOOK
       = Title

@@ -292,6 +292,13 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param node [Asciidoctor::Block]
+      def convert_sidebar(node)
+        title_tag = node.title.nil_or_empty? ? '' : %(<p><strong>#{node.title}</strong></p>)
+        %(#{title_tag}
+#{node.content})
+      end
+
       # @param node [Asciidoctor::List]
       def convert_ulist(node)
         lines = []
