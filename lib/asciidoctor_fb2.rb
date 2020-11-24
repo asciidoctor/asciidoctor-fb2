@@ -264,7 +264,7 @@ module Asciidoctor
 
       # @param node [Asciidoctor::AbstractNode]
       # @param target [String]
-      def register_binary(node, target) # rubocop:disable Metrics/MethodLength
+      def register_binary(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         unless Asciidoctor::Helpers.uriish?(target)
           out_dir = node.attr('outdir', nil, true) || doc_option(node.document, :to_dir)
           fs_path = File.join(out_dir, target)
@@ -274,6 +274,10 @@ module Asciidoctor
           end
 
           if File.readable?(fs_path)
+            # Calibre fails to load images if they contain path separators
+            target.sub!('/', '_')
+            target.sub!('\\', '_')
+
             @book.add_binary(target, fs_path)
             target = %(##{target})
           end
