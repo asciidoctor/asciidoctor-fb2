@@ -161,6 +161,10 @@ module Asciidoctor
         result
       end
 
+      def convert_inline_break(node)
+        node.text
+      end
+
       # @param node [Asciidoctor::Inline]
       def convert_inline_button(node)
         %([<strong>#{node.text}</strong>])

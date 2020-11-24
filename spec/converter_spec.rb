@@ -36,6 +36,17 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
   end
 
+  it 'converts inline line break' do
+    book, = convert <<~BOOK
+      = Title
+
+      Rubies are red, +
+      Topazes are blue.
+    BOOK
+
+    expect(book.bodies[0].content).to include("Rubies are red,\nTopazes are blue.")
+  end
+
   it 'converts inline btn' do
     book, = convert <<~BOOK
       = Title
