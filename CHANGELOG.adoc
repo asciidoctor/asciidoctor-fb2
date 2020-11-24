@@ -7,7 +7,7 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
-== Unreleased
+== 0.2.4 (2020-11-24) - @slonopotamus
 
 * add support for table captions
 * fix images from subfolders not loaded in Calibre
