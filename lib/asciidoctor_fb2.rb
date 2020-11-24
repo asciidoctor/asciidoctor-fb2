@@ -6,6 +6,8 @@ require 'fb2rb'
 
 module Asciidoctor
   module FB2
+    DATA_DIR = File.expand_path(File.join(__dir__, '..', 'data'))
+
     # Converts AsciiDoc documents to FB2 e-book formats
     class Converter < Asciidoctor::Converter::Base # rubocop:disable Metrics/ClassLength
       include ::Asciidoctor::Writer
@@ -25,6 +27,8 @@ module Asciidoctor
       # @param node [Asciidoctor::Document]
       def convert_document(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         @book = FB2rb::Book.new
+        @book.add_stylesheet('text/css', File.join(DATA_DIR, 'fb2.css'))
+
         document_info = @book.description.document_info
         title_info = @book.description.title_info
 
