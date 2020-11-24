@@ -36,6 +36,17 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
   end
 
+  it 'converts inline btn' do
+    book, = convert <<~BOOK
+      = Title
+      :experimental:
+
+      Press the btn:[OK] button when you are finished.
+    BOOK
+
+    expect(book.bodies[0].content).to include('[<strong>OK</strong>]')
+  end
+
   it 'converts inline kbd' do
     book, = convert <<~BOOK
       = Title

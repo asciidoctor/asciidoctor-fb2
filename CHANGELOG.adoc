@@ -10,6 +10,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 == Unreleased
 
 * add support for `kbd` inline macro. https://github.com/slonopotamus/asciidoctor-fb2/issues/13[#13]
+* add support for `btn` inline macro
 
 == 0.2.0 (2020-11-23) - @slonopotamus
 

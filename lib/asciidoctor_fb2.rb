@@ -162,6 +162,11 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Inline]
+      def convert_inline_button(node)
+        %([<strong>#{node.text}</strong>])
+      end
+
+      # @param node [Asciidoctor::Inline]
       def convert_inline_kbd(node)
         %(<strong>#{node.attr('keys').join('</strong>+<strong>')}</strong>)
       end
