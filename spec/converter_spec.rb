@@ -29,11 +29,13 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
       = Title
       :experimental:
 
-      To save the file, select menu:File[Save].
+      menu:File[Save]
+      menu:Help[]
     BOOK
 
     body = book.bodies[0]
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
+    expect(body.content).to include('<strong>Help</strong>')
   end
 
   it 'converts quote' do

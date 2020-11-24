@@ -194,8 +194,8 @@ module Asciidoctor
         submenus = node.attr('submenus') * %(</b>#{caret}<b>)
 
         result = %(<strong>#{menu}</strong>)
-        result += %(#{caret}<strong>#{submenus}</strong>) unless submenus.empty?
-        result += %(#{caret}<strong>#{menuitem}</strong>) unless menuitem.empty?
+        result += %(#{caret}<strong>#{submenus}</strong>) unless submenus.nil_or_empty?
+        result += %(#{caret}<strong>#{menuitem}</strong>) unless menuitem.nil_or_empty?
 
         result
       end

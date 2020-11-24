@@ -10,6 +10,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 == Unreleased
 
 * add support for literal blocks
+* fix crash for `menu` inline macro without submenu. https://github.com/slonopotamus/asciidoctor-fb2/issues/15[#15]
 
 == 0.2.2 (2020-11-24) - @slonopotamus
 
