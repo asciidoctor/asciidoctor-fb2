@@ -7,6 +7,10 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* add support for literal blocks
+
 == 0.2.2 (2020-11-24) - @slonopotamus
 
 * do not crash on inline line break macro. https://github.com/slonopotamus/asciidoctor-fb2/issues/14[#14]

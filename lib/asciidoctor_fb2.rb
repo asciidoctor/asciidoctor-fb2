@@ -137,7 +137,7 @@ module Asciidoctor
       # @param node [Asciidoctor::Block]
       def convert_verse(node)
         body = node.content&.split("\n\n")&.map do |stanza|
-          %(<stanza>\n<v>#{stanza.split("\n").join("</v>\n<v>")}</v>\n</stanza>)
+          %(<stanza>\n<v>#{stanza.split("\n") * "</v>\n<v>"}</v>\n</stanza>)
         end&.join("\n")
 
         citetitle = node.attr('citetitle')
@@ -155,6 +155,11 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Block]
       def convert_listing(node)
+        convert_literal(node)
+      end
+
+      # @param node [Asciidoctor::Block]
+      def convert_literal(node)
         lines = []
         node.content.split("\n").each do |line|
           lines << %(<p><code>#{line}</code></p>)
@@ -186,7 +191,7 @@ module Asciidoctor
         caret = '&#160;<strong>&#8250;</strong> '
         menu = node.attr('menu')
         menuitem = node.attr('menuitem')
-        submenus = node.attr('submenus').join(%(</b>#{caret}<b>))
+        submenus = node.attr('submenus') * %(</b>#{caret}<b>)
 
         result = %(<strong>#{menu}</strong>)
         result += %(#{caret}<strong>#{submenus}</strong>) unless submenus.empty?
@@ -207,7 +212,7 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Inline]
       def convert_inline_kbd(node)
-        %(<strong>#{node.attr('keys').join('</strong>+<strong>')}</strong>)
+        %(<strong>#{node.attr('keys') * '</strong>+<strong>'}</strong>)
       end
 
       # @param node [Asciidoctor::Inline]
@@ -365,7 +370,7 @@ module Asciidoctor
                                when :literal
                                  %(<p><pre>#{cell.text}</pre></p>)
                                else
-                                 (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content.join "</p>\n<p>"}</p>)
+                                 (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content * "</p>\n<p>"}</p>)
                                end
                              end
 

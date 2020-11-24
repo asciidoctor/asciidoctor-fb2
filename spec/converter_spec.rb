@@ -107,4 +107,19 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     body = book.bodies[0]
     expect(body.content).to include('<strong>Ctrl</strong>+<strong>Shift</strong>+<strong>N</strong>')
   end
+
+  it 'converts literal block' do
+    book, = convert <<~BOOK
+      = Title
+
+      ....
+      code
+      more code
+      ....
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<p><code>code</code></p>')
+    expect(body.content).to include('<p><code>more code</code></p>')
+  end
 end
