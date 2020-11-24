@@ -33,7 +33,18 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     BOOK
 
     body = book.bodies[0]
-    expect(body).not_to be_nil
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
+  end
+
+  it 'converts inline kbd' do
+    book, = convert <<~BOOK
+      = Title
+      :experimental:
+
+      kbd:[Ctrl+Shift+N]
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<strong>Ctrl</strong>+<strong>Shift</strong>+<strong>N</strong>')
   end
 end

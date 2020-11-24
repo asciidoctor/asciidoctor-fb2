@@ -162,6 +162,11 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Inline]
+      def convert_inline_kbd(node)
+        %(<strong>#{node.attr('keys').join('</strong>+<strong>')}</strong>)
+      end
+
+      # @param node [Asciidoctor::Inline]
       def convert_inline_anchor(node) # rubocop:disable Metrics/MethodLength
         case node.type
         when :xref
