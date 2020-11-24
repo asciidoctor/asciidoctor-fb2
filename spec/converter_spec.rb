@@ -41,7 +41,7 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
   it 'converts sidebar' do
     book, = convert <<~BOOK
       = Title
-      
+
       .Bzzzz
       ****
       Sidebar
