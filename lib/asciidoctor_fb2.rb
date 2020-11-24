@@ -120,6 +120,24 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Block]
+      def convert_verse(node)
+        body = node.content&.split("\n\n")&.map do |stanza|
+          %(<stanza>\n<v>#{stanza.split("\n").join("</v>\n<v>")}</v>\n</stanza>)
+        end&.join("\n")
+
+        citetitle = node.attr('citetitle')
+        citetitle_tag = citetitle.nil_or_empty? ? '' : %(<title>#{citetitle}</title>)
+
+        author = node.attr('attribution')
+        author_tag = author.nil_or_empty? ? '' : %(<text-author>#{node.attr('attribution')}</text-author>)
+        %(<poem>
+#{citetitle_tag}
+#{body}
+#{author_tag}
+</poem>)
+      end
+
+      # @param node [Asciidoctor::Block]
       def convert_listing(node)
         lines = []
         node.content.split("\n").each do |line|
@@ -161,6 +179,7 @@ module Asciidoctor
         result
       end
 
+      # @param node [Asciidoctor::Inline]
       def convert_inline_break(node)
         node.text
       end

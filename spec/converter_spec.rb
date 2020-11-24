@@ -36,6 +36,30 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
   end
 
+  it 'converts verse' do
+    book, = convert <<~BOOK
+      = Title
+
+      [verse, Janet Devlin, Working for the Man]
+      _____
+      Coffee cup
+      Watching the hands of the clock
+      Holding me, locked up
+      Waiting for the sun to rise
+
+      Red light
+      Caught between day and night
+      Can someone help me with this fight
+      Against the Monday morning blues
+      _____
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include("<poem>\n<title>Working for the Man</title>")
+    expect(body.content).to include("<stanza>\n<v>Coffee cup</v>")
+    expect(body.content).to include("<text-author>Janet Devlin</text-author>\n</poem>")
+  end
+
   it 'converts inline line break' do
     book, = convert <<~BOOK
       = Title

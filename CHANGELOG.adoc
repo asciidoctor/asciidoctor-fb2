@@ -10,6 +10,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 == Unreleased
 
 * do not crash on inline line break macro. https://github.com/slonopotamus/asciidoctor-fb2/issues/14[#14]
+* add support for verses
 
 == 0.2.1 (2020-11-24) - @slonopotamus
 
