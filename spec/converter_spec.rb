@@ -36,6 +36,20 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>File</strong>&#160;<strong>&#8250;</strong> <strong>Save</strong>')
   end
 
+  it 'converts quote' do
+    book, = convert <<~BOOK
+      = Title
+
+      [quote, Captain James T. Kirk, Star Trek IV: The Voyage Home]
+      Everybody remember where we parked.
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include("<cite>\n<subtitle>Star Trek IV: The Voyage Home</subtitle>")
+    expect(body.content).to include('<p>Everybody remember where we parked.</p>')
+    expect(body.content).to include("<text-author>Captain James T. Kirk</text-author>\n</cite>")
+  end
+
   it 'converts verse' do
     book, = convert <<~BOOK
       = Title
