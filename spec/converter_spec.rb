@@ -21,6 +21,7 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     binary = book.binaries[0]
     expect(binary).not_to be_nil
     expect(binary.id).to eq('wolpertinger.jpg')
+    expect(binary.content_type).to eq('image/jpeg')
     expect(binary.content).to eq(IO.read(fixture_file('wolpertinger.jpg'), mode: 'rb'))
   end
 

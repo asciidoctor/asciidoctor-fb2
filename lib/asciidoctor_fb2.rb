@@ -3,6 +3,7 @@
 require 'asciidoctor'
 require 'asciidoctor/converter'
 require 'fb2rb'
+require 'mime/types'
 
 module Asciidoctor
   module FB2
@@ -63,7 +64,7 @@ module Asciidoctor
 
         unless (cover_image = node.attr('front-cover-image')).nil?
           cover_image_path = node.image_uri(cover_image)
-          register_binary(node, cover_image_path)
+          register_binary(node, cover_image_path, 'image')
           title_info.coverpage = FB2rb::Coverpage.new([%(##{cover_image_path})])
         end
 
@@ -247,13 +248,13 @@ module Asciidoctor
 
       # @param node [Asciidoctor::Inline]
       def convert_inline_image(node)
-        image_attrs = register_binary(node, node.image_uri(node.target))
+        image_attrs = register_binary(node, node.image_uri(node.target), 'image')
         %(<image #{image_attrs * ' '}/>)
       end
 
       # @param node [Asciidoctor::Block]
       def convert_image(node)
-        image_attrs = register_binary(node, node.image_uri(node.attr('target')))
+        image_attrs = register_binary(node, node.image_uri(node.attr('target')), 'image')
         image_attrs << %(title="#{node.captioned_title}") if node.title?
         image_attrs << %(id="#{node.id}") if node.id
         %(<p><image #{image_attrs * ' '}/></p>)
@@ -266,9 +267,15 @@ module Asciidoctor
         doc
       end
 
+      def determine_mime_type(filename, media_type)
+        mime_types = MIME::Types.type_for(filename)
+        mime_types.delete_if { |x| x.media_type != media_type }
+        mime_types.empty? ? nil : mime_types[0].content_type
+      end
+
       # @param node [Asciidoctor::AbstractNode]
       # @param target [String]
-      def register_binary(node, target) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def register_binary(node, target, media_type) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         unless Asciidoctor::Helpers.uriish?(target)
           out_dir = node.attr('outdir', nil, true) || doc_option(node.document, :to_dir)
           fs_path = File.join(out_dir, target)
@@ -282,7 +289,8 @@ module Asciidoctor
             target.sub!('/', '_')
             target.sub!('\\', '_')
 
-            @book.add_binary(target, fs_path)
+            mime_type = determine_mime_type(target, media_type)
+            @book.add_binary(target, fs_path, mime_type)
             target = %(##{target})
           end
         end
