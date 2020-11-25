@@ -7,6 +7,10 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* fix crash on `+toc::[]+` macro
+
 == 0.3.0 (2020-11-25) - @slonopotamus
 
 * output MIME type for FB2 embedded binary files. https://github.com/slonopotamus/asciidoctor-fb2/issues/19[#19]

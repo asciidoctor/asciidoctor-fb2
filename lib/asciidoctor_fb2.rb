@@ -115,6 +115,11 @@ module Asciidoctor
         end
       end
 
+      # @param _node [Asciidoctor::Block]
+      def convert_toc(_node)
+        ''
+      end
+
       # @param node [Asciidoctor::Block]
       def convert_paragraph(node)
         lines = [
