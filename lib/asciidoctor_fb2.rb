@@ -14,6 +14,7 @@ module Asciidoctor
       include ::Asciidoctor::Writer
 
       CSV_DELIMITER_REGEX = /\s*,\s*/.freeze
+      IMAGE_ATTRIBUTE_VALUE_RX = /^image:{1,2}(.*?)\[(.*?)\]$/.freeze
 
       register_for 'fb2'
 
@@ -63,6 +64,7 @@ module Asciidoctor
         title_info.date = document_info.date = fb2date
 
         unless (cover_image = node.attr('front-cover-image')).nil?
+          cover_image = Regexp.last_match(1) if cover_image =~ IMAGE_ATTRIBUTE_VALUE_RX
           cover_image_path = node.image_uri(cover_image)
           register_binary(node, cover_image_path, 'image')
           title_info.coverpage = FB2rb::Coverpage.new([%(##{cover_image_path})])

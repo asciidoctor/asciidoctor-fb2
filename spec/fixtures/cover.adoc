@@ -1,2 +1,2 @@
 = Book with cover
-:front-cover-image: wolpertinger.jpg
+:front-cover-image: image:wolpertinger.jpg[]
