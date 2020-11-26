@@ -1,7 +1,7 @@
 = {project-name} Changelog
 :project-name: Asciidoctor FB2
 :project-handle: asciidoctor-fb2
-:slug: slonopotamus/{project-handle}
+:slug: asciidoctor/{project-handle}
 :uri-project: https://github.com/{slug}
 
 This document provides a high-level view of the changes to the {project-name} by release.

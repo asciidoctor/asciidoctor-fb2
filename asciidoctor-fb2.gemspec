@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors = ['Marat Radchenko']
   s.email = ['marat@slonopotamus.org']
   s.summary = 'Converts AsciiDoc documents to FB2 e-book formats'
-  s.homepage = 'https://github.com/slonopotamus/asciidoctor-fb2'
+  s.homepage = 'https://github.com/asciidoctor/asciidoctor-fb2'
   s.license = 'MIT'
   s.required_ruby_version = '>= 2.4.0'
 
