@@ -82,7 +82,7 @@ module Asciidoctor
 #{node.content}
 </section>)
         @book.bodies << FB2rb::Body.new(nil, body)
-        if node.document.footnotes
+        unless node.document.footnotes.empty?
           notes = []
           node.document.footnotes.each do |footnote|
             notes << %(<section id="note-#{footnote.index}">

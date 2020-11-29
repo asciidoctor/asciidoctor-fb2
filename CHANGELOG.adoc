@@ -10,6 +10,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 == Unreleased
 
 * fix crash on `+toc::[]+` macro
+* avoid adding `notes` body to FB2 if document doesn't have any footnotes
 
 == 0.3.0 (2020-11-25) - @slonopotamus
 
