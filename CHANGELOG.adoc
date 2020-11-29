@@ -7,7 +7,7 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
-== Unreleased
+== 0.3.1 (2020-11-29) - @slonopotamus
 
 * fix crash on `+toc::[]+` macro
 * avoid adding `notes` body to FB2 if document doesn't have any footnotes
