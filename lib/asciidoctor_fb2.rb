@@ -413,7 +413,7 @@ module Asciidoctor
               ]
               cell_attrs << %(colspan="#{cell.colspan}") if cell.colspan
               cell_attrs << %(rowspan="#{cell.rowspan}") if cell.rowspan
-              lines << %(<#{cell_tag_name} #{cell_attrs * ' '}">#{cell_content}</#{cell_tag_name}>)
+              lines << %(<#{cell_tag_name} #{cell_attrs * ' '}>#{cell_content}</#{cell_tag_name}>)
             end
             lines << '</tr>'
           end
