@@ -382,30 +382,36 @@ module Asciidoctor
         lines * "\n"
       end
 
+      # @param cell [Asciidoctor::Table::Cell]
+      def get_cell_content(cell) # rubocop:disable Metrics/MethodLength
+        case cell.style
+        when :asciidoc
+          cell.content
+        when :emphasis
+          %(<emphasis>#{cell.text}</emphasis>)
+        when :literal
+          %(<code>#{cell.text}</code>)
+        when :monospaced
+          %(<code>#{cell.text}</code>)
+        when :strong
+          %(<strong>#{cell.text}</strong>)
+        else
+          cell.text
+        end
+      end
+
       # @param node [Asciidoctor::Table]
       def convert_table(node) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
         lines = []
         lines << %(<subtitle>#{node.captioned_title}</subtitle>) if node.title?
         lines << '<table>'
-        node.rows.to_h.each do |tsec, rows| # rubocop:disable Metrics/BlockLength
+        node.rows.to_h.each do |tsec, rows|
           next if rows.empty?
 
           rows.each do |row|
             lines << '<tr>'
             row.each do |cell|
-              cell_content = if tsec == :head
-                               cell.text
-                             else
-                               case cell.style
-                               when :asciidoc
-                                 cell.content
-                               when :literal
-                                 %(<p><pre>#{cell.text}</pre></p>)
-                               else
-                                 (cell_content = cell.content).empty? ? '' : %(<p>#{cell_content * "</p>\n<p>"}</p>)
-                               end
-                             end
-
+              cell_content = get_cell_content(cell)
               cell_tag_name = (tsec == :head || cell.style == :header ? 'th' : 'td')
               cell_attrs = [
                 %(halign="#{cell.attr 'halign'}"),
