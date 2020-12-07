@@ -44,30 +44,28 @@ module Asciidoctor
         end
         node.authors.each do |author|
           title_info.authors << FB2rb::Author.new(
-            author.firstname,
-            author.middlename,
-            author.lastname,
-            nil,
-            [],
-            author.email.nil? ? [] : [author.email]
+            first_name: author.firstname,
+            middle_name: author.middlename,
+            last_name: author.lastname,
+            emails: author.email.nil? ? [] : [author.email]
           )
         end
 
         if node.attr? 'series-name'
           series_name = node.attr 'series-name'
           series_volume = node.attr 'series-volume', 1
-          title_info.sequences << FB2rb::Sequence.new(series_name, series_volume)
+          title_info.sequences << FB2rb::Sequence.new(name: series_name, number: series_volume)
         end
 
         date = node.attr('revdate') || node.attr('docdate')
-        fb2date = FB2rb::FB2Date.new(date, Date.parse(date))
+        fb2date = FB2rb::FB2Date.new(display_value: date, value: Date.parse(date))
         title_info.date = document_info.date = fb2date
 
         unless (cover_image = node.attr('front-cover-image')).nil?
           cover_image = Regexp.last_match(1) if cover_image =~ IMAGE_ATTRIBUTE_VALUE_RX
           cover_image_path = node.image_uri(cover_image)
           register_binary(node, cover_image_path, 'image')
-          title_info.coverpage = FB2rb::Coverpage.new([%(##{cover_image_path})])
+          title_info.coverpage = FB2rb::Coverpage.new(images: [%(##{cover_image_path})])
         end
 
         document_info.id = node.attr('uuid', '')
@@ -81,7 +79,7 @@ module Asciidoctor
 <title><p>#{node.doctitle}</p></title>
 #{node.content}
 </section>)
-        @book.bodies << FB2rb::Body.new(nil, body)
+        @book.bodies << FB2rb::Body.new(content: body)
         unless node.document.footnotes.empty?
           notes = []
           node.document.footnotes.each do |footnote|
@@ -90,7 +88,7 @@ module Asciidoctor
 <p>#{footnote.text}</p>
 </section>)
           end
-          @book.bodies << FB2rb::Body.new('notes', notes * "\n")
+          @book.bodies << FB2rb::Body.new(name: 'notes', content: notes * "\n")
         end
         @book
       end
