@@ -10,7 +10,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 == Unreleased
 
 * fix table cells markup
-* bump fb2rb to 0.5.0
+* bump fb2rb to 0.6.0
 
 == 0.3.1 (2020-11-29) - @slonopotamus
 
