@@ -257,6 +257,11 @@ module Asciidoctor
         %(<image #{image_attrs * ' '}/>)
       end
 
+      # @param node [Asciidoctor::Inline]
+      def convert_inline_indexterm(node)
+        node.type == :visible ? node.text : ''
+      end
+
       # @param node [Asciidoctor::Block]
       def convert_image(node)
         image_attrs = register_binary(node, node.image_uri(node.attr('target')), 'image')

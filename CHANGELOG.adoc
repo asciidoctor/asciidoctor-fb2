@@ -7,6 +7,10 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* add support for `indexterm` and `intexterm2` inline macros
+
 == 0.4.0 (2021-02-14) - @slonopotamus
 
 * fix table cells markup

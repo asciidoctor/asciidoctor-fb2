@@ -126,6 +126,18 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<strong>Ctrl</strong>+<strong>Shift</strong>+<strong>N</strong>')
   end
 
+  it 'converts inline index term' do
+    book, = convert <<~BOOK
+      = Title
+      :experimental:
+
+      indexterm2:[Lancelot] was one of the Knights of the Round Table.
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('Lancelot was one of the Knights of the Round Table.')
+  end
+
   it 'converts literal block' do
     book, = convert <<~BOOK
       = Title
