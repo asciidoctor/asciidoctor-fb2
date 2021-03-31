@@ -280,6 +280,11 @@ module Asciidoctor
         %(<p><image #{image_attrs * ' '}/></p>)
       end
 
+      # @param node [Asciidoctor::Block]
+      def convert_open(node)
+        convert_paragraph(node)
+      end
+
       # @param doc [Asciidoctor::Document]
       # @return [Asciidoctor::Document]
       def root_document(doc)

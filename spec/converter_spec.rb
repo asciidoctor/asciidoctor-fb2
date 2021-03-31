@@ -152,6 +152,22 @@ describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
     expect(body.content).to include('<p>1. words</p>')
   end
 
+  it 'converts open block' do
+    book, = convert <<~BOOK
+      = Title
+
+      --
+      text
+      --
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<p>
+<p>
+text
+</p>')
+  end
+
   it 'converts literal block' do
     book, = convert <<~BOOK
       = Title

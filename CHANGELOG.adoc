@@ -11,6 +11,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 
 * add support for `indexterm` and `intexterm2` inline macros
 * add support for inline callouts
+* add support for open blocks
 
 == 0.4.0 (2021-02-14) - @slonopotamus
 
