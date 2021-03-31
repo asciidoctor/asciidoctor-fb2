@@ -182,4 +182,21 @@ text
     expect(body.content).to include('<p><code>code</code></p>')
     expect(body.content).to include('<p><code>more code</code></p>')
   end
+
+  it 'converts example block' do
+    book, = convert <<~BOOK
+      = Title
+
+      .Example
+      ====
+      This is an example of an example block.
+      ====
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<p><strong>Example:</strong></p>
+<p>
+This is an example of an example block.
+</p>')
+  end
 end

@@ -215,6 +215,14 @@ module Asciidoctor
         node.text
       end
 
+      # @param node [Asciidoctor::Block]
+      def convert_example(node)
+        lines = []
+        lines << %(<p><strong>#{node.title}:</strong></p>) if node.title?
+        lines << node.content
+        lines * "\n"
+      end
+
       # @param node [Asciidoctor::Inline]
       def convert_inline_button(node)
         %([<strong>#{node.text}</strong>])
