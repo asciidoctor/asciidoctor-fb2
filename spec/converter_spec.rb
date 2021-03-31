@@ -199,4 +199,12 @@ text
 This is an example of an example block.
 </p>')
   end
+
+  it 'converts page break' do
+    convert <<~BOOK
+      = Title
+
+      <<<
+    BOOK
+  end
 end

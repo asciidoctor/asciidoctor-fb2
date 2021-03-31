@@ -118,6 +118,11 @@ module Asciidoctor
         ''
       end
 
+      # @param _node [Asciidoctor::Block]
+      def convert_page_break(_node)
+        ''
+      end
+
       # @param node [Asciidoctor::Block]
       def convert_paragraph(node)
         lines = [

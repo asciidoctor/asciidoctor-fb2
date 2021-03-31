@@ -13,6 +13,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 * add support for inline callouts
 * add support for open blocks
 * add support for example blocks
+* fix crash if document contains a page break
 
 == 0.4.0 (2021-02-14) - @slonopotamus
 
