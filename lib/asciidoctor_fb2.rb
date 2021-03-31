@@ -124,6 +124,11 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Block]
+      def convert_floating_title(node)
+        %(<subtitle id="#{node.id}">#{node.title}</subtitle>)
+      end
+
+      # @param node [Asciidoctor::Block]
       def convert_paragraph(node)
         lines = [
           '<p>',
