@@ -200,7 +200,7 @@ This is an example of an example block.
 </p>')
   end
 
-  it 'converts floating tile' do
+  it 'converts floating title' do
     book, = convert <<~BOOK
       = Title
 
@@ -211,6 +211,17 @@ This is an example of an example block.
 
     body = book.bodies[0]
     expect(body.content).to include('<subtitle id="_lemme_float">lemme float</subtitle>')
+  end
+
+  it 'converts thematic break' do
+    convert <<~BOOK
+      = Title
+      before
+
+      '''
+
+      after
+    BOOK
   end
 
   it 'converts page break' do

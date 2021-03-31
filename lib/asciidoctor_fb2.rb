@@ -128,6 +128,11 @@ module Asciidoctor
         %(<subtitle id="#{node.id}">#{node.title}</subtitle>)
       end
 
+      # @param _node [Asciidoctor::Block]
+      def convert_thematic_break(_node)
+        ''
+      end
+
       # @param node [Asciidoctor::Block]
       def convert_paragraph(node)
         lines = [
