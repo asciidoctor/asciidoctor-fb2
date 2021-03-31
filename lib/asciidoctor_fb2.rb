@@ -262,6 +262,16 @@ module Asciidoctor
         node.type == :visible ? node.text : ''
       end
 
+      # @param node [Asciidoctor::Inline]
+      def convert_inline_callout(node)
+        %(<strong>(#{node.text})</strong>)
+      end
+
+      # @param node [Asciidoctor::List]
+      def convert_colist(node)
+        convert_olist(node)
+      end
+
       # @param node [Asciidoctor::Block]
       def convert_image(node)
         image_attrs = register_binary(node, node.image_uri(node.attr('target')), 'image')
