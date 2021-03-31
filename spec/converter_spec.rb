@@ -216,12 +216,27 @@ This is an example of an example block.
   it 'converts thematic break' do
     convert <<~BOOK
       = Title
+
       before
 
       '''
 
       after
     BOOK
+  end
+
+  it 'converts stem blocks' do
+    book, = convert <<~BOOK
+      = Title
+
+      [asciimath,title=Math]
+      ++++
+      y=x^2 sqrt(4)
+      ++++
+    BOOK
+
+    body = book.bodies[0]
+    expect(body.content).to include('<p><code>y=x^2 sqrt(4)</code></p>')
   end
 
   it 'converts page break' do

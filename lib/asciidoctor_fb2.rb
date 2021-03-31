@@ -124,6 +124,11 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Block]
+      def convert_stem(node)
+        %(<p><code>#{node.content}</code></p>)
+      end
+
+      # @param node [Asciidoctor::Block]
       def convert_floating_title(node)
         %(<subtitle id="#{node.id}">#{node.title}</subtitle>)
       end
