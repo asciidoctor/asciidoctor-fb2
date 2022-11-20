@@ -3,6 +3,7 @@ Marat Radchenko <marat@slonopotamus.org>
 :project-name: Asciidoctor FB2
 :project-handle: asciidoctor-fb2
 :slug: asciidoctor/{project-handle}
+:source-highlighter: rouge
 :uri-project: https://github.com/{slug}
 :uri-ci: {uri-project}/actions?query=branch%3Amaster
 :uri-gem: https://rubygems.org/gems/{project-handle}
