@@ -39,7 +39,7 @@ This command should be available on your PATH if you installed the `{project-han
 Otherwise, you can find the command in the [path]_bin_ folder of the project.
 We also recommend specifying an output directory using the `-D` option flag.
 
-[source,shell script]
+[source,shell]
 ----
 $ asciidoctor-fb2 -D output path/to/book.adoc
 ----
