@@ -339,8 +339,8 @@ module Asciidoctor
 
           if File.readable?(fs_path)
             # Calibre fails to load images if they contain path separators
-            target.sub!('/', '_')
-            target.sub!('\\', '_')
+            target.gsub!('/', '_')
+            target.gsub!('\\', '_')
 
             mime_type = determine_mime_type(target, media_type)
             @book.add_binary(target, fs_path, mime_type)
