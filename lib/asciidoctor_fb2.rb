@@ -371,11 +371,11 @@ module Asciidoctor
       def convert_admonition(node)
         lines = ['<p>']
 
-        if node.document.attr? 'icons', 'font' and (icon = ADMONITION_ICONS[node.attr 'name'])
-          lines << %(#{icon} )
-        else
-          lines << %(<strong>#{node.title || node.caption}:</strong>)
-        end
+        lines << if node.document.attr?('icons', 'font') && (icon = ADMONITION_ICONS[node.attr 'name'])
+                   %(#{icon} )
+                 else
+                   %(<strong>#{node.title || node.caption}:</strong>)
+                 end
 
         lines << node.content
         lines << '</p>'
