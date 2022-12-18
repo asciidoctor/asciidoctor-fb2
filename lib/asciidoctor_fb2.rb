@@ -359,11 +359,26 @@ module Asciidoctor
         image_attrs << %(alt="#{node.attr('alt')}") if node.attr? 'alt'
       end
 
+      ADMONITION_ICONS = {
+        'caution' => '🔥',
+        'important' => '❗',
+        'note' => 'ℹ️',
+        'tip' => '💡',
+        'warning' => '⚠️'
+      }.freeze
+
       # @param node [Asciidoctor::Block]
       def convert_admonition(node)
-        lines = [%(<p><strong>#{node.title || node.caption}:</strong>
-#{node.content}
-</p>)]
+        lines = ['<p>']
+
+        if node.document.attr? 'icons', 'font' and (icon = ADMONITION_ICONS[node.attr 'name'])
+          lines << %(#{icon} )
+        else
+          lines << %(<strong>#{node.title || node.caption}:</strong>)
+        end
+
+        lines << node.content
+        lines << '</p>'
         lines << '<empty-line/>' unless node.has_role?('last')
         lines * "\n"
       end
