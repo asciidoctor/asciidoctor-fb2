@@ -307,6 +307,7 @@ module Asciidoctor
         image_attrs << %(id="#{node.id}") if node.id
 
         p_style = []
+        p_style << %(float: #{node.attr 'float'}) if node.attr? 'float'
         p_style << %(text-align: #{node.attr 'align'}) if node.attr? 'align'
 
         p_attrs = []

@@ -11,6 +11,7 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 
 * fix handling of image paths with path separators
 * add support for image alignment. https://github.com/asciidoctor/asciidoctor-fb2/issues/16[#16]
+* add support for floating images
 
 == 0.6.0 (2022-10-30) - @slonopotamus
 
