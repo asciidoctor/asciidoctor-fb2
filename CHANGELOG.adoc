@@ -7,6 +7,11 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* fix handling of image paths with path separators
+* add support for image alignment. https://github.com/asciidoctor/asciidoctor-fb2/issues/16[#16]
+
 == 0.6.0 (2022-10-30) - @slonopotamus
 
 * bump fb2rb to 0.7.0

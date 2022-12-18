@@ -282,7 +282,7 @@ module Asciidoctor
       # @param node [Asciidoctor::Inline]
       def convert_inline_image(node)
         image_attrs = register_binary(node, node.image_uri(node.target), 'image')
-        %(<image #{image_attrs * ' '}/>)
+        %(<image #{image_attrs.sort! * ' '}/>)
       end
 
       # @param node [Asciidoctor::Inline]
@@ -301,11 +301,17 @@ module Asciidoctor
       end
 
       # @param node [Asciidoctor::Block]
-      def convert_image(node)
+      def convert_image(node) # rubocop:disable Metrics/AbcSize
         image_attrs = register_binary(node, node.image_uri(node.attr('target')), 'image')
         image_attrs << %(title="#{node.captioned_title}") if node.title?
         image_attrs << %(id="#{node.id}") if node.id
-        %(<p><image #{image_attrs * ' '}/></p>)
+
+        p_style = []
+        p_style << %(text-align: #{node.attr 'align'}) if node.attr? 'align'
+
+        p_attrs = []
+        p_attrs << %(style="#{p_style.sort! * '; '}") unless p_style.empty?
+        %(<p #{p_attrs.sort! * ' '}><image #{image_attrs.sort! * ' '}/></p>)
       end
 
       # @param node [Asciidoctor::Block]
@@ -465,7 +471,7 @@ module Asciidoctor
               ]
               cell_attrs << %(colspan="#{cell.colspan}") if cell.colspan
               cell_attrs << %(rowspan="#{cell.rowspan}") if cell.rowspan
-              lines << %(<#{cell_tag_name} #{cell_attrs * ' '}>#{cell_content}</#{cell_tag_name}>)
+              lines << %(<#{cell_tag_name} #{cell_attrs.sort! * ' '}>#{cell_content}</#{cell_tag_name}>)
             end
             lines << '</tr>'
           end
