@@ -7,7 +7,7 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
-== Unreleased
+== 0.8.0 (2025-01-20) - @slonopotamus
 
 * Bump minimal supported Ruby version to 2.7
 * Add support for Ruby 3.4
