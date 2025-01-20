@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary = 'Converts AsciiDoc documents to FB2 e-book formats'
   s.homepage = 'https://github.com/asciidoctor/asciidoctor-fb2'
   s.license = 'MIT'
-  s.required_ruby_version = '>= 2.6.0'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.files = `git ls-files`.split("\n").reject { |f| f.match(%r{^spec/}) }
   s.executables = `git ls-files -- bin/*`.split("\n").map do |f|
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_runtime_dependency 'asciidoctor', '~> 2.0'
-  s.add_runtime_dependency 'fb2rb', '>= 0.6', '< 0.9'
+  s.add_runtime_dependency 'fb2rb', '~> 0.9'
   s.add_runtime_dependency 'mime-types', '~> 3.0'
 
   s.add_development_dependency 'asciidoctor-diagram', '~> 2.0'

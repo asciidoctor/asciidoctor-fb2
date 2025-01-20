@@ -9,7 +9,8 @@ For a detailed view of what has changed, refer to the {uri-project}/commits/mast
 
 == Unreleased
 
-* Remove unsupported Ruby versions on CI
+* Bump minimal supported Ruby version to 2.7
+* Add support for Ruby 3.4
 
 == 0.7.0 (2022-12-18) - @slonopotamus
 
