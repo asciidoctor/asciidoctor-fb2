@@ -3,7 +3,7 @@
 require 'asciidoctor_fb2'
 require 'open3'
 
-RSpec.configure do |config| # rubocop:disable Metrics/BlockLength
+RSpec.configure do |config|
   config.before do
     FileUtils.rm_r temp_dir, force: true, secure: true
   end

@@ -18,9 +18,9 @@ Gem::Specification.new do |s|
   end
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'asciidoctor', '~> 2.0'
-  s.add_runtime_dependency 'fb2rb', '~> 0.9.1'
-  s.add_runtime_dependency 'mime-types', '~> 3.0'
+  s.add_dependency 'asciidoctor', '~> 2.0'
+  s.add_dependency 'fb2rb', '~> 0.9.1'
+  s.add_dependency 'mime-types', '~> 3.0'
 
   s.add_development_dependency 'asciidoctor-diagram', '~> 2.0'
   s.add_development_dependency 'rake', '~> 13.0'

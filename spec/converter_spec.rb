@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 
-describe 'asciidoctor-fb2' do # rubocop:disable Metrics/BlockLength
+describe Asciidoctor::FB2::Converter do
   it 'produces stable output for reproducible books' do
     out_file1 = temp_file 'book1.fb2.zip'
     out_file2 = temp_file 'book2.fb2.zip'
@@ -214,7 +214,7 @@ This is an example of an example block.
   end
 
   it 'converts thematic break' do
-    convert <<~BOOK
+    book, = convert <<~BOOK
       = Title
 
       before
@@ -223,6 +223,9 @@ This is an example of an example block.
 
       after
     BOOK
+
+    body = book.bodies[0]
+    expect(body).not_to be_nil
   end
 
   it 'converts stem blocks' do
@@ -240,10 +243,13 @@ This is an example of an example block.
   end
 
   it 'converts page break' do
-    convert <<~BOOK
+    book, = convert <<~BOOK
       = Title
 
       <<<
     BOOK
+
+    body = book.bodies[0]
+    expect(body).not_to be_nil
   end
 end

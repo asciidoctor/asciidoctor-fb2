@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 
-describe 'asciidoctor-fb2' do
+describe Asciidoctor::FB2::Converter do
   it 'exits with 0 when prints version' do
     out, _, res = run_command asciidoctor_fb2_bin, '--version'
     expect(res.exitstatus).to eq(0)
