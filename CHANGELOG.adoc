@@ -7,6 +7,10 @@
 This document provides a high-level view of the changes to the {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-project}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+* Remove unsupported Ruby versions on CI
+
 == 0.7.0 (2022-12-18) - @slonopotamus
 
 * fix handling of image paths with path separators
